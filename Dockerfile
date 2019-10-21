@@ -26,7 +26,6 @@ COPY . .
 # Build the Go app
 RUN go build -o main .
 
-
 # Expose port 8000 to the outside world
 EXPOSE 8000
 

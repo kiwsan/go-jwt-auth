@@ -4,4 +4,5 @@ services:
   - docker
 
 script:
+  - go mod download
   - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
