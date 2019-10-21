@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/kiwsan/go-jwt-auth.svg?branch=master)](https://travis-ci.org/kiwsan/go-jwt-auth)
 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=kiwsan_go-jwt-auth)](https://sonarcloud.io/dashboard?id=kiwsan_go-jwt-auth)
+
 ## Quick start
 
 ### Login
