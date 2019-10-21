@@ -4,6 +4,12 @@ services:
   - docker
 
 script:
-  - docker build -t go-jwt-auth:${TRAVIS_COMMIT} .
-  - docker run -d -p 127.0.0.1:8000:8000 go-jwt-auth:${TRAVIS_COMMIT}
-  - docker ps
+  - docker build -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
+  - docker run -d -p 127.0.0.1:8000:8000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+  - curl 127.0.0.1:8000
+  - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME" --password-stdin  
+  - docker tag ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+  - docker push $DOCKER_CUSTOM_HOST/${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+  - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:latest .
+  - docker tag ${TRAVIS_REPO_SLUG}:latest $DOCKER_CUSTOM_HOST/${TRAVIS_REPO_SLUG}:latest
+  - docker push $DOCKER_CUSTOM_HOST/${TRAVIS_REPO_SLUG}:latest
