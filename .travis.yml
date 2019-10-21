@@ -4,6 +4,6 @@ services:
   - docker
 
 script:
-  - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
-  - docker run -d -p 127.0.0.1:8000:8000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+  - docker build -t go-jwt-auth:${TRAVIS_COMMIT} .
+  - docker run -d -p 127.0.0.1:8000:8000 go-jwt-auth:${TRAVIS_COMMIT}
   - docker ps
