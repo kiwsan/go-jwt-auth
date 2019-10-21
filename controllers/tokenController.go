@@ -1,20 +1,15 @@
 package controllers
 
 import (
-	"net/http"
-
+	"github.com/kiwsan/go-jwt-auth/models"
 	"github.com/kiwsan/go-jwt-auth/services"
 	"github.com/labstack/echo/v4"
-)
-
-type (
-	refreshTokenReq struct {
-		RefreshToken string `json:"refresh_token"`
-	}
+	"net/http"
 )
 
 func RefreshAccessTokenPostHandler(c echo.Context) error {
-	req := new(refreshTokenReq)
+
+	req := new(models.RefreshTokenRequest)
 	if err := c.Bind(req); err != nil {
 		return err
 	}

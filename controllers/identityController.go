@@ -1,16 +1,16 @@
 package controllers
 
 import (
-	"net/http"
-
 	"github.com/dgrijalva/jwt-go"
+	"github.com/kiwsan/go-jwt-auth/constants"
 	"github.com/kiwsan/go-jwt-auth/utils"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"net/http"
 )
 
 var IsLoggedIn = middleware.JWTWithConfig(middleware.JWTConfig{
-	SigningKey: []byte("3a52cf25791d406da5e35c4bb446f476"),
+	SigningKey: []byte(constants.SecretToken),
 })
 
 func MeGetHandler(c echo.Context) error {
