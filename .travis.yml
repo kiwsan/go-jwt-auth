@@ -7,9 +7,3 @@ script:
   - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
   - docker run -d -p 127.0.0.1:8000:8000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
   - docker ps
-  - echo "$DOCKER_PASSWORD" | docker login $DOCKER_HOST -u "$DOCKER_USERNAME" --password-stdin  
-  - docker tag ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} $DOCKER_HOST/${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
-  - docker push $DOCKER_HOST/${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
-  - docker build --no-cache -t ${TRAVIS_REPO_SLUG}:latest .
-  - docker tag ${TRAVIS_REPO_SLUG}:latest $DOCKER_HOST/${TRAVIS_REPO_SLUG}:latest
-  - docker push $DOCKER_HOST/${TRAVIS_REPO_SLUG}:latest
