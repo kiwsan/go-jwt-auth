@@ -1,5 +1,7 @@
 # Go Identity Service
 
+[![Build Status](https://travis-ci.org/kiwsan/go-jwt-auth.svg?branch=master)](https://travis-ci.org/kiwsan/go-jwt-auth)
+
 ## Quick start
 
 ### Login
