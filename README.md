@@ -18,7 +18,7 @@ Response
 "refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE3MzU5NjZ9.pNQfXAx3FTIoYCRA6tqX8YJQx-KksJGS_ISN2O1RPSQ"}
 ```
 
-### Request
+### Request user claims information
 
 Request a user resource using the token in Authorization request header.
 
