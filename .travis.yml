@@ -3,10 +3,11 @@ language: go
 services:
   - docker
 
-script:
+before_script:
   - docker build -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
-  - docker run -d -p 8000:8000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
-  - sleep 15
+  - docker run -d -p 172.0.0.1:8000:8000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
+
+script:
   - curl "172.0.0.1:8000"
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   - sonar-scanner
