@@ -3,7 +3,7 @@ package utils
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/kiwsan/go-jwt-auth/constants"
-	"github.com/kiwsan/go-jwt-auth/models"
+	"github.com/kiwsan/go-jwt-auth/entities"
 	"strconv"
 	"time"
 )
@@ -29,7 +29,7 @@ func CreateToken(username string) (map[string]string, error) {
 	}
 
 	// Add refresh token to database
-	rt, err := models.NewRefreshToken(username)
+	rt, err := entities.NewRefreshToken(username)
 	if err != nil {
 		return nil, err
 	}
