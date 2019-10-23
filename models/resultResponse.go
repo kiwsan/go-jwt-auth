@@ -1,4 +1,4 @@
-package entities
+package models
 
 type ResponseResult struct {
 	Error  string `json:"error"`

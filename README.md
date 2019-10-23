@@ -17,9 +17,11 @@ $ curl -X POST -d 'username=admin' -d 'password=password' localhost:8000/login
 Response
 
 ```bash
-{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE2NTA0NjYsInVzZXJuYW1lIjoiYWRtaW4ifQ.Ba0iLuWe3H-0Jq3mbzA10V-Z2UL4AA2G_InQjyeSeCs",
-
-"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE3MzU5NjZ9.pNQfXAx3FTIoYCRA6tqX8YJQx-KksJGS_ISN2O1RPSQ"}
+{
+  "access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE4MzQyMzIsInVzZXJuYW1lIjoiYWRtaW4ifQ.J8KCW98u2JMC1kqd2xStp10WTYYb9lksdR4QYtXQffc",
+  "expire_date":"1571834232",
+  "refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE5MTk3MzJ9.6pPqklkbIrSrgT82wqS_Dn4UFs_CUk_MkSt1BdXeNvQ"
+}
 ```
 
 ### Request user claims information
@@ -27,7 +29,7 @@ Response
 Request a user resource using the token in Authorization request header.
 
 ```bash
-curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE2NTA0NjYsInVzZXJuYW1lIjoiYWRtaW4ifQ.Ba0iLuWe3H-0Jq3mbzA10V-Z2UL4AA2G_InQjyeSeCs' -i http://localhost:8000/me
+curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE4MzQyMzIsInVzZXJuYW1lIjoiYWRtaW4ifQ.J8KCW98u2JMC1kqd2xStp10WTYYb9lksdR4QYtXQffc' -i http://localhost:8000/me
 ```
 
 Response
@@ -40,13 +42,17 @@ Welcome admin!
 Request a new token using the refresh token.
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/refresh-tokens --data '{"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE3MzU5NjZ9.pNQfXAx3FTIoYCRA6tqX8YJQx-KksJGS_ISN2O1RPSQ"}'
+curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/refresh-tokens --data '{"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE5MTk3MzJ9.6pPqklkbIrSrgT82wqS_Dn4UFs_CUk_MkSt1BdXeNvQ"}'
 ```
 
 Response
 
 ```bash
-"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE2NTA3NTgsInVzZXJuYW1lIjoiYWRtaW4ifQ.OhbRLciqmXsNN70Oyw9hBzEGLakBkS72FDFMgUz4FWU","refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE3MzYyNTh9.32fIs0D6rPsvHcPIiapz6NCQluBBpgPJP9UgwcdxgHM"}
+{
+  "access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE4MzQzOTgsInVzZXJuYW1lIjoiYWRtaW4ifQ.IueTxg55g0R2DG9z_I6y3ea1YCSr8pm0SO_A-9LV_vQ",
+  "expire_date":"1571834398",
+  "refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE5MTk4OTh9.Z3z9Lz8C3nh5BbbxAMwvQYRW9wmcsgvrgFlYTrTS3og"
+}
 ```
 
 ## Resources
