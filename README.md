@@ -17,7 +17,7 @@ $ curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/regi
 Response
 ```bash
 {
-    "username": "admin1",
+    "username": "admin",
     "password": "password",
     "confirm_password": "password"
 }
