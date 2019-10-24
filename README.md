@@ -6,6 +6,23 @@
 
 ## Quick start
 
+
+### Register
+Request a new user to login.
+
+```bash
+$ curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/register --data '{ "username": "admin", "password": "password", "confirm_password": "password" }'
+```
+
+Response
+```bash
+{
+    "username": "admin1",
+    "password": "password",
+    "confirm_password": "password"
+}
+```
+
 ### Login
 
 Login using username and password to retrieve a token.
@@ -29,7 +46,7 @@ Response
 Request a user resource using the token in Authorization request header.
 
 ```bash
-curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE4MzQyMzIsInVzZXJuYW1lIjoiYWRtaW4ifQ.J8KCW98u2JMC1kqd2xStp10WTYYb9lksdR4QYtXQffc' -i http://localhost:8000/me
+$ curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE4MzQyMzIsInVzZXJuYW1lIjoiYWRtaW4ifQ.J8KCW98u2JMC1kqd2xStp10WTYYb9lksdR4QYtXQffc' -i http://localhost:8000/me
 ```
 
 Response
@@ -42,7 +59,7 @@ Welcome admin!
 Request a new token using the refresh token.
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/refresh-tokens --data '{"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE5MTk3MzJ9.6pPqklkbIrSrgT82wqS_Dn4UFs_CUk_MkSt1BdXeNvQ"}'
+$ curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/refresh-tokens --data '{"refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzE5MTk3MzJ9.6pPqklkbIrSrgT82wqS_Dn4UFs_CUk_MkSt1BdXeNvQ"}'
 ```
 
 Response
