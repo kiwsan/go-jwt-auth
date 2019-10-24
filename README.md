@@ -6,7 +6,6 @@
 
 ## Quick start
 
-
 ### Register
 Request a new user to login.
 
