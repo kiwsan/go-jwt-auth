@@ -18,13 +18,13 @@ func MeGetHandler(c echo.Context) error {
 
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	username := claims["username"].(string)
+	email := claims["email"].(string)
 
-	return c.String(http.StatusOK, "Welcome "+username+"!")
+	return c.String(http.StatusOK, "Welcome "+email+"!")
 }
 
 func LoginPostHandler(c echo.Context) error {
-	username := c.FormValue("username")
+	email := c.FormValue("email")
 	password := c.FormValue("password")
 
 	client, err := data.ClientDb()
@@ -36,9 +36,9 @@ func LoginPostHandler(c echo.Context) error {
 	collection := client.Database("identityService").Collection("user")
 
 	// Check in your db if the user exists or not
-	err = collection.FindOne(context.TODO(), bson.D{{"username", username}}).Decode(&user)
+	err = collection.FindOne(context.TODO(), bson.D{{"email", email}}).Decode(&user)
 	if err != nil {
-		return c.String(http.StatusBadRequest, "Invalid username.")
+		return c.String(http.StatusBadRequest, "Email was not found.")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
@@ -50,7 +50,7 @@ func LoginPostHandler(c echo.Context) error {
 	// Get claims from database
 
 	// Create token
-	jwtToken, err := utils.CreateToken(username) // Add claims
+	jwtToken, err := utils.CreateToken(email) // Add claims
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func RegisterPostHandler(c echo.Context) error {
 
 	collection := client.Database("identityService").Collection("user")
 
-	user, err := entities.NewUser(req.Username, req.Password)
+	user, err := entities.NewUser(req.Email, req.Password)
 	if err != nil {
 		return err
 	}
@@ -82,9 +82,9 @@ func RegisterPostHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, "Invalid confirm password.")
 	}
 
-	err = collection.FindOne(context.TODO(), bson.D{{"username", req.Username}}).Decode(&user)
+	err = collection.FindOne(context.TODO(), bson.D{{"email", req.Email}}).Decode(&user)
 	if err == nil {
-		return c.String(http.StatusBadRequest, "Username already Exists!")
+		return c.String(http.StatusBadRequest, "Email already Exists!")
 	}
 
 	result, err := collection.InsertOne(context.TODO(), user)

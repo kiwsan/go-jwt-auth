@@ -11,13 +11,13 @@
 Request a new user to login.
 
 ```bash
-$ curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/register --data '{ "username": "admin", "password": "password", "confirm_password": "password" }'
+$ curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/register --data '{ "email": "admin@kiwsan.com", "password": "password", "confirm_password": "password" }'
 ```
 
 Response
 ```bash
 {
-    "username": "admin1",
+    "email": "admin@kiwsan.com",
     "password": "password",
     "confirm_password": "password"
 }
@@ -25,10 +25,10 @@ Response
 
 ### Login
 
-Login using username and password to retrieve a token.
+Login using email and password to retrieve a token.
 
 ```bash
-$ curl -X POST -d 'username=admin' -d 'password=password' localhost:8000/login
+$ curl -X POST -d 'email=admin@kiwsan.com' -d 'password=password' localhost:8000/login
 ```
 
 Response

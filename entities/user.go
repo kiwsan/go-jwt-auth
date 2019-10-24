@@ -6,7 +6,7 @@ import (
 )
 
 type User struct {
-	Username     string
+	Email        string
 	PasswordHash string
 	Role         string
 	CreatedAt    time.Time
@@ -17,7 +17,7 @@ func IsValidPassword(password string, confirmPassword string) bool {
 	return password == confirmPassword
 }
 
-func NewUser(username string, password string) (*User, error) {
+func NewUser(email string, password string) (*User, error) {
 
 	encryptPassword, err := bcrypt.GenerateFromPassword([]byte(password), 5)
 	if err != nil {
@@ -25,7 +25,7 @@ func NewUser(username string, password string) (*User, error) {
 	}
 
 	return &User{
-		Username:     username,
+		Email:        email,
 		PasswordHash: string(encryptPassword),
 		Role:         "user",
 		CreatedAt:    time.Now().UTC(),
