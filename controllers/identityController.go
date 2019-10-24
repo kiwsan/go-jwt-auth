@@ -2,16 +2,10 @@ package controllers
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/kiwsan/go-jwt-auth/constants"
 	"github.com/kiwsan/go-jwt-auth/utils"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 	"net/http"
 )
-
-var IsLoggedIn = middleware.JWTWithConfig(middleware.JWTConfig{
-	SigningKey: []byte(constants.SecretToken),
-})
 
 func MeGetHandler(c echo.Context) error {
 
@@ -41,4 +35,9 @@ func LoginPostHandler(c echo.Context) error {
 
 	// return jwtToken
 	return c.JSON(http.StatusOK, jwtToken)
+}
+
+func RegisterPostHandler(c echo.Context) error {
+
+	return c.String(http.StatusOK, "Welcome!")
 }
