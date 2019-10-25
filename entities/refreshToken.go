@@ -1,35 +1,34 @@
 package entities
 
 import (
-	"github.com/dgrijalva/jwt-go"
-	"github.com/kiwsan/go-jwt-auth/constants"
 	"time"
 )
 
 // https://travix.io/encapsulating-dependencies-in-go-b0fd74021f5a
 type RefreshToken struct {
-	Token      string
-	UserName   string
-	ExpireDate int64
+	Email     string
+	Token     string
+	CreatedAt time.Time
+	RevokedAt *time.Time
 }
 
-// encapsulation model
-func NewRefreshToken(username string) (*RefreshToken, error) {
+func NewRefreshToken(email string, token string) (*RefreshToken, error) {
+	return &RefreshToken{
+		Email:     email,
+		Token:     token,
+		CreatedAt: time.Now().UTC(),
+		RevokedAt: &time.Time{},
+	}, nil
+}
 
-	exp := time.Now().Add(time.Hour * constants.RefreshTokenExpire).Unix()
+func RevokeRefreshToken(email string, token string) (*RefreshToken, error) {
 
-	refreshToken := jwt.New(jwt.SigningMethodHS256)
-	rtClaims := refreshToken.Claims.(jwt.MapClaims)
-	rtClaims["exp"] = exp
-
-	rt, err := refreshToken.SignedString([]byte(constants.SecretToken)) //secret
-	if err != nil {
-		return nil, err
-	}
+	revokedAt := time.Now().UTC()
 
 	return &RefreshToken{
-		Token:      rt,
-		UserName:   username,
-		ExpireDate: exp,
+		Email:     email,
+		Token:     token,
+		CreatedAt: time.Now().UTC(),
+		RevokedAt: &revokedAt,
 	}, nil
 }

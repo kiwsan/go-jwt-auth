@@ -33,7 +33,7 @@ func LoginPostHandler(c echo.Context) error {
 	}
 
 	user := new(entities.User)
-	collection := client.Database("identityService").Collection("user")
+	collection := client.Database("identityService").Collection("users")
 
 	// Check in your db if the user exists or not
 	err = collection.FindOne(context.TODO(), bson.D{{"email", email}}).Decode(&user)
@@ -47,13 +47,25 @@ func LoginPostHandler(c echo.Context) error {
 		return c.String(http.StatusBadRequest, "Invalid password.")
 	}
 
-	// Get claims from database
-
 	// Create token
 	jwtToken, err := utils.CreateToken(email) // Add claims
 	if err != nil {
 		return err
 	}
+
+	// Add token to database
+	refreshToken, err := entities.NewRefreshToken(email, jwtToken.AccessToken)
+	if err != nil {
+		return err
+	}
+
+	refreshTokens := client.Database("identityService").Collection("refreshTokens")
+	result, err := refreshTokens.InsertOne(context.TODO(), refreshToken)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Inserted a Single Document: ", result.InsertedID)
 
 	// return jwtToken
 	return c.JSON(http.StatusOK, jwtToken)
@@ -71,7 +83,7 @@ func RegisterPostHandler(c echo.Context) error {
 		return err
 	}
 
-	collection := client.Database("identityService").Collection("user")
+	collection := client.Database("identityService").Collection("users")
 
 	user, err := entities.NewUser(req.Email, req.Password)
 	if err != nil {

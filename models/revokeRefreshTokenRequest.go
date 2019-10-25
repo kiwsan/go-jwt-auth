@@ -1,7 +1,7 @@
 package models
 
 type (
-	RefreshTokenRequest struct {
+	RevokeRefreshTokenRequest struct {
 		Token string `json:"token"`
 	}
 )

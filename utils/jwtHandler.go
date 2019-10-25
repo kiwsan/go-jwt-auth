@@ -3,12 +3,11 @@ package utils
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/kiwsan/go-jwt-auth/constants"
-	"github.com/kiwsan/go-jwt-auth/entities"
-	"strconv"
+	"github.com/kiwsan/go-jwt-auth/models"
 	"time"
 )
 
-func CreateToken(username string) (map[string]string, error) {
+func CreateToken(email string) (*models.TokenResponse, error) {
 
 	// Create token
 	token := jwt.New(jwt.SigningMethodHS256)
@@ -18,7 +17,7 @@ func CreateToken(username string) (map[string]string, error) {
 	// This is the information which frontend can use
 	// The backend can also decode the token and get admin etc.
 	claims := token.Claims.(jwt.MapClaims)
-	claims["username"] = username
+	claims["email"] = email
 	claims["exp"] = exp
 
 	// Generate encoded token and send it as response.
@@ -29,14 +28,14 @@ func CreateToken(username string) (map[string]string, error) {
 	}
 
 	// Add refresh token to database
-	rt, err := entities.NewRefreshToken(username)
+	rt, err := CreateRefreshToken(email)
 	if err != nil {
 		return nil, err
 	}
 
-	return map[string]string{
-		"access_token":  t,
-		"refresh_token": rt.Token,
-		"expire_date":   strconv.FormatUint(uint64(exp), 10),
+	return &models.TokenResponse{
+		AccessToken:  t,
+		RefreshToken: rt.Token,
+		ExpireDate:   exp,
 	}, nil
 }

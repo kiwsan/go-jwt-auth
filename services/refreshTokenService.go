@@ -2,13 +2,15 @@ package services
 
 import (
 	"fmt"
+	"github.com/kiwsan/go-jwt-auth/constants"
+	"github.com/kiwsan/go-jwt-auth/models"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/kiwsan/go-jwt-auth/utils"
 )
 
 //https://godoc.org/github.com/dgrijalva/jwt-go#example-Parse--Hmac
-func RefreshAccessToken(username string, refreshToken string) (map[string]string, error) {
+func RefreshAccessToken(req *models.RefreshTokenRequest, refreshToken string) (*models.TokenResponse, error) {
 	// Parse takes the token string and a function for looking up the key.
 	// The latter is especially useful if you use multiple keys for your application.
 	// The standard is to use 'kid' in the head of the token to identify
@@ -20,15 +22,19 @@ func RefreshAccessToken(username string, refreshToken string) (map[string]string
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
 
-		return []byte("3a52cf25791d406da5e35c4bb446f476"), nil
+		return []byte(constants.SecretToken), nil
 	})
+
+	if err != nil {
+		return nil, err
+	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		// Get the user record from database or
 		// run through your business logic to verify if the user can log in
 		fmt.Println(claims["username"])
 
-		t, err := utils.CreateToken(username)
+		t, err := utils.CreateToken("admin")
 		if err != nil {
 			return nil, err
 		}

@@ -16,6 +16,7 @@ func NewRoutes(e *echo.Echo) {
 	e.GET("/me", controllers.MeGetHandler, controllers.IsLoggedIn)
 
 	//token controller
-	e.POST("/refresh-tokens", controllers.RefreshAccessTokenPostHandler)
+	e.POST("/access-tokens/:refreshToken/refresh", controllers.RefreshAccessTokenPostHandler)
+	e.POST("/refresh-tokens/:refreshToken/revoke", controllers.RevokeRefreshTokenPostHandler, controllers.IsLoggedIn)
 
 }
