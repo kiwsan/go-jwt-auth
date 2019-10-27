@@ -112,5 +112,5 @@ func RegisterPostHandler(c echo.Context) error {
 
 	fmt.Println("Inserted a Single Document: ", result.InsertedID)
 
-	return c.JSON(http.StatusCreated, req)
+	return c.JSON(http.StatusCreated, "The user has been created.")
 }
