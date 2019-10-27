@@ -2,10 +2,9 @@ package services
 
 import (
 	"fmt"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/kiwsan/go-jwt-auth/constants"
 	"github.com/kiwsan/go-jwt-auth/models"
-
-	"github.com/dgrijalva/jwt-go"
 	"github.com/kiwsan/go-jwt-auth/utils"
 )
 
