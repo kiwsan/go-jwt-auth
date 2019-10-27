@@ -84,6 +84,14 @@ func RegisterPostHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, req)
 	}
 
+	if req.Email == "" {
+		return c.JSON(http.StatusBadRequest, "Invalid email")
+	}
+
+	if req.Password == "" {
+		return c.JSON(http.StatusBadRequest, "Invalid password")
+	}
+
 	client, err := data.ClientDb()
 	if err != nil {
 		return errorHandler(err)
