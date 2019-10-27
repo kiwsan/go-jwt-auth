@@ -4,10 +4,10 @@ services:
   - docker
 
 before_script:
-  - sed -ri "s/${DATABASE_HOST}/${DATABASE_HOST}/" appsettings.production.yml
-  - sed -ri "s/${DATABASE_USER}/${DATABASE_USER}/" appsettings.production.yml
-  - sed -ri "s/${DATABASE_PASSWORD}/${DATABASE_PASSWORD}/" appsettings.production.yml
-  - sed -ri "s/${DATABASE_PORT}/${DATABASE_PORT}/" appsettings.production.yml
+  - sed "s/${DATABASE_HOST}/test/" appsettings.${TRAVIS_ENVIRONMENT}.yml
+  - sed "s/${DATABASE_USER}/${DATABASE_USER}/" appsettings.${TRAVIS_ENVIRONMENT}.yml
+  - sed "s/${DATABASE_PASSWORD}/test/" appsettings.${TRAVIS_ENVIRONMENT}.yml
+  - sed "s/${DATABASE_PORT}/${DATABASE_PORT}/" appsettings.${TRAVIS_ENVIRONMENT}.yml
   - docker build -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
   - docker run -d -p 127.0.0.1:8000:8000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
 
