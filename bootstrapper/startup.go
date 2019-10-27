@@ -15,7 +15,7 @@ func OnStart(e *echo.Echo) error {
 	routes.NewRoutes(e)
 
 	//environment
-	environment := os.Getenv("ENVIRONMENT")
+	environment := os.Getenv("GOLANG_ENVIRONMENT")
 	if environment == "" {
 		fmt.Print("default: ")
 		environment = "development"
