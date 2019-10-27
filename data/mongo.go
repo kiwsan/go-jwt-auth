@@ -16,6 +16,8 @@ func ClientDb() (*mongo.Client, error) {
 
 	connectionString := fmt.Sprintf("mongodb://%s:%s@%s:%s/admin", env.User, env.Password, env.Host, env.Port)
 
+	fmt.Println("connectionString: " + connectionString)
+
 	// Set client options and connect
 	clientOptions := options.Client().ApplyURI(connectionString)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
