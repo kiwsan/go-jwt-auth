@@ -11,8 +11,8 @@ func NewRoutes(e *echo.Echo) {
 	e.GET("/", controllers.HomeGetHandler)
 
 	//identity controller
-	e.POST("/login", controllers.LoginPostHandler)
-	e.POST("/register", controllers.RegisterPostHandler)
+	e.POST("/sign-in", controllers.LoginPostHandler)
+	e.POST("/sign-up", controllers.RegisterPostHandler)
 	e.GET("/me", controllers.MeGetHandler, controllers.IsLoggedIn)
 
 	//token controller
