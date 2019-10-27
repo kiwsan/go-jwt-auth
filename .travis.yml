@@ -4,10 +4,10 @@ services:
   - docker
 
 before_script:
-  - sed "s/${ENV_DATABASE_HOST}/'${DATABASE_HOST}'/g" appsettings.staging.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
-  - sed "s/${ENV_DATABASE_USER}/'${DATABASE_USER}'/g" appsettings.staging.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
-  - sed "s/${ENV_DATABASE_PASSWORD}/'${DATABASE_PASSWORD}'/g" appsettings.staging.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
-  - sed "s/${ENV_DATABASE_PORT}/'${DATABASE_PORT}'/g" appsettings.staging.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
+  - sed -ri 's/${ENV_DATABASE_HOST}/${DATABASE_HOST}/g' appsettings.staging.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
+  - sed -ri 's/${ENV_DATABASE_USER}/${DATABASE_USER}/g' appsettings.staging.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
+  - sed -ri 's/${ENV_DATABASE_PASSWORD}/${DATABASE_PASSWORD}/g' appsettings.staging.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
+  - sed -ri 's/${ENV_DATABASE_PORT}/${DATABASE_PORT}/g' appsettings.staging.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
   - docker build -t golang-identity-service:${TRAVIS_COMMIT} .
   - docker run -d -p 127.0.0.1:8000:8000 golang-identity-service:${TRAVIS_COMMIT}
 
