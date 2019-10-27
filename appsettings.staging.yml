@@ -1,10 +1,10 @@
 appname: identity-service
 
 database:
-  host:     "${DATABASE_HOST}"
-  user:     "${DATABASE_USER}"
-  password: "${DATABASE_PASSWORD}" #The database user is required administrator roles.
-  port:     "${DATABASE_PORT}"
+  host:     "${ENV_DATABASE_HOST}"
+  user:     "${ENV_DATABASE_USER}"
+  password: "${ENV_DATABASE_PASSWORD}" #The database user is required administrator roles.
+  port:     "${ENV_DATABASE_PORT}"
 
 contacts:
   - name: i kiwsan
