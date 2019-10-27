@@ -14,6 +14,12 @@ import (
 	"net/http"
 )
 
+func errorHandler(e error) error {
+	fmt.Println(e)
+
+	return e
+}
+
 func MeGetHandler(c echo.Context) error {
 
 	user := c.Get("user").(*jwt.Token)
@@ -29,7 +35,7 @@ func LoginPostHandler(c echo.Context) error {
 
 	client, err := data.ClientDb()
 	if err != nil {
-		return err
+		return errorHandler(err)
 	}
 
 	user := new(entities.User)
@@ -50,19 +56,19 @@ func LoginPostHandler(c echo.Context) error {
 	// Create token
 	jwtToken, err := utils.CreateToken(email) // Add claims
 	if err != nil {
-		return err
+		return errorHandler(err)
 	}
 
 	// Add token to database
 	refreshToken, err := entities.NewRefreshToken(email, jwtToken.AccessToken)
 	if err != nil {
-		return err
+		return errorHandler(err)
 	}
 
 	refreshTokens := client.Database("identityService").Collection("refreshTokens")
 	result, err := refreshTokens.InsertOne(context.TODO(), refreshToken)
 	if err != nil {
-		return err
+		return errorHandler(err)
 	}
 
 	fmt.Println("Inserted a Single Document: ", result.InsertedID)
@@ -80,14 +86,14 @@ func RegisterPostHandler(c echo.Context) error {
 
 	client, err := data.ClientDb()
 	if err != nil {
-		return err
+		return errorHandler(err)
 	}
 
 	collection := client.Database("identityService").Collection("users")
 
 	user, err := entities.NewUser(req.Email, req.Password)
 	if err != nil {
-		return err
+		return errorHandler(err)
 	}
 
 	if !entities.IsValidPassword(req.Password, req.ConfirmPassword) {
@@ -101,7 +107,7 @@ func RegisterPostHandler(c echo.Context) error {
 
 	result, err := collection.InsertOne(context.TODO(), user)
 	if err != nil {
-		return err
+		return errorHandler(err)
 	}
 
 	fmt.Println("Inserted a Single Document: ", result.InsertedID)
