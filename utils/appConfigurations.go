@@ -8,7 +8,7 @@ var Config = struct {
 		Host     string `default:"localhost"`
 		User     string `default:"root"`
 		Password string `required:"true" env:"password"`
-		Port     uint   `default:"27017"`
+		Port     string `default:"27017"`
 	}
 
 	Contacts []struct {
