@@ -1,0 +1,11 @@
+appname: identity-service
+
+database:
+  host:     "localhost"
+  user:     "root"
+  password: "Str0ngPassword!" #The database user is required administrator roles.
+  port:     27017
+
+contacts:
+  - name: "i kiwsan"
+    email: "admin@kiwsan.com"

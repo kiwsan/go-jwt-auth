@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	"fmt"
+	"github.com/kiwsan/go-jwt-auth/utils"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -11,11 +12,9 @@ import (
 func ClientDb() (*mongo.Client, error) {
 
 	// Database authentication
-	host := "localhost"
-	user := "root" // The database user is required administrator roles.
-	password := "Str0ngPassword!"
+	env := utils.Config.Database
 
-	connectionString := fmt.Sprintf("mongodb://%s:%s@%s:27017/admin", user, password, host)
+	connectionString := fmt.Sprintf("mongodb://%s:%s@%s:27017/admin", env.User, env.Password, env.Host)
 
 	// Set client options and connect
 	clientOptions := options.Client().ApplyURI(connectionString)

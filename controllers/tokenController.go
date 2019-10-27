@@ -108,5 +108,5 @@ func RevokeRefreshTokenPostHandler(c echo.Context) error {
 
 	fmt.Printf("Matched %v documents and updated %v documents.\n", res.MatchedCount, res.ModifiedCount)
 
-	return c.String(http.StatusAccepted, "Accepted")
+	return c.String(http.StatusAccepted, "Refresh token has been revoked.")
 }
