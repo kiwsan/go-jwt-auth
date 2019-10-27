@@ -4,6 +4,10 @@ services:
   - docker
 
 before_script:
+  - sed -ri "s/${DATABASE_HOST}/${DATABASE_HOST}/" .coveralls.yml
+  - sed -ri "s/${DATABASE_USER}/${DATABASE_USER}/" .coveralls.yml
+  - sed -ri "s/${DATABASE_PASSWORD}/${DATABASE_PASSWORD}/" .coveralls.yml
+  - sed -ri "s/${DATABASE_PORT}/${DATABASE_PORT}/" .coveralls.yml
   - docker build -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
   - docker run -d -p 127.0.0.1:8000:8000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
 
