@@ -14,7 +14,7 @@ func ClientDb() (*mongo.Client, error) {
 	// Database authentication
 	env := utils.Config.Database
 
-	connectionString := fmt.Sprintf("mongodb://%s:%s@%s:27017/admin", env.User, env.Password, env.Host)
+	connectionString := fmt.Sprintf("mongodb://%s:%s@%s:%d/admin", env.User, env.Password, env.Host, env.Port)
 
 	// Set client options and connect
 	clientOptions := options.Client().ApplyURI(connectionString)
