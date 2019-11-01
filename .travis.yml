@@ -3,10 +3,6 @@ language: go
 services:
   - docker
 
-branches:
-  only:
-  - travis-ci
-
 before_script:
   - sed 's/${ENV_DATABASE_HOST}/'"${DATABASE_HOST}"'/g; s/${ENV_DATABASE_USER}/'"${DATABASE_USER}"'/g; s/${ENV_DATABASE_PASSWORD}/'"${DATABASE_PASSWORD}"'/g; s/${ENV_DATABASE_PORT}/'"${DATABASE_PORT}"'/g;' appsettings.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
   - docker build -t golang-identity-service:${TRAVIS_COMMIT} .
