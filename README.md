@@ -1,6 +1,7 @@
 # Go Identity Service
 
 [![Build Status](https://travis-ci.org/kiwsan/go-jwt-auth.svg?branch=master)](https://travis-ci.org/kiwsan/go-jwt-auth)
+[![CircleCI](https://circleci.com/gh/kiwsan/go-jwt-auth/tree/master.svg?style=svg)](https://circleci.com/gh/kiwsan/go-jwt-auth/tree/master)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=kiwsan_go-jwt-auth)](https://sonarcloud.io/dashboard?id=kiwsan_go-jwt-auth)
 
