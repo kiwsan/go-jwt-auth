@@ -9,7 +9,7 @@ import (
 )
 
 // https://blog.ruanbekker.com/blog/2019/04/17/mongodb-examples-with-golang/
-func ClientDb() (*mongo.Client, error) {
+func DbConnection() (*mongo.Client, error) {
 
 	// Database authentication
 	env := utils.Config.Database

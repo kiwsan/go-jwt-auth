@@ -6,14 +6,16 @@ import (
 
 // https://travix.io/encapsulating-dependencies-in-go-b0fd74021f5a
 type RefreshToken struct {
+	UserId    string
 	Email     string
 	Token     string
 	CreatedAt time.Time
 	RevokedAt *time.Time
 }
 
-func NewRefreshToken(email string, token string) (*RefreshToken, error) {
+func NewRefreshToken(userId string, email string, token string) (*RefreshToken, error) {
 	return &RefreshToken{
+		UserId:    userId,
 		Email:     email,
 		Token:     token,
 		CreatedAt: time.Now().UTC(),

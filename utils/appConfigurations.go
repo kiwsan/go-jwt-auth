@@ -11,6 +11,13 @@ var Config = struct {
 		Port     string `default:"27017"`
 	}
 
+	RabbitMq struct {
+		Host     string `default:"localhost"`
+		User     string `default:"user"`
+		Password string `required:"true" env:"secret"`
+		Port     string `default:"5672"`
+	}
+
 	Contacts []struct {
 		Name  string
 		Email string `required:"true"`
