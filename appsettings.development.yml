@@ -6,6 +6,12 @@ database:
   password: "Str0ngPassword!" #The database user is required administrator roles.
   port:     "27017"
 
+rabbitmq:
+  host: "localhost"
+  user: "user"
+  password: "secret"
+  port: "5672"
+
 contacts:
   - name: "i kiwsan"
     email: "admin@kiwsan.com"

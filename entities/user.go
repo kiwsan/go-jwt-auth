@@ -1,11 +1,14 @@
 package entities
 
 import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
+// omitempty to protect against zeroed _id insertion
 type User struct {
+	Id           primitive.ObjectID `bson:"_id,omitempty"` //https://stackoverflow.com/questions/55445429/unable-to-decode-the-objectid-subvalue-from-mongodb-results-in-golang
 	Email        string
 	PasswordHash string
 	Role         string

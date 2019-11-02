@@ -6,6 +6,12 @@ database:
   password: "${ENV_DATABASE_PASSWORD}" #The database user is required administrator roles.
   port:     "${ENV_DATABASE_PORT}"
 
+rabbitmq:
+  host:     "${ENV_RABBITMQ_HOST}"
+  user:     "${ENV_RABBITMQ_USER}"
+  password: "${ENV_RABBITMQ_PASSWORD}"
+  port:     "${ENV_RABBITMQ_PORT}"
+
 contacts:
   - name: i kiwsan
     email: admin@kiwsan.com

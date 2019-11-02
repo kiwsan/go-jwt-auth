@@ -22,7 +22,7 @@ func RefreshAccessTokenPostHandler(c echo.Context) error {
 		return err
 	}
 
-	client, err := data.ClientDb()
+	client, err := data.DbConnection()
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func RevokeRefreshTokenPostHandler(c echo.Context) error {
 
 	fmt.Println(refreshToken)
 
-	client, err := data.ClientDb()
+	client, err := data.DbConnection()
 	if err != nil {
 		return err
 	}
