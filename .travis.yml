@@ -15,6 +15,14 @@ before_install:
     -in travis_rsa.enc -out travis_rsa -d
   - chmod 600 travis_rsa
   - mv travis_rsa ~/.ssh/travis_rsa
+before_script:
+  - sed 's/${ENV_DATABASE_HOST}/'"${DATABASE_HOST}"'/g; s/${ENV_DATABASE_USER}/'"${DATABASE_USER}"'/g;
+    s/${ENV_DATABASE_PASSWORD}/'"${DATABASE_PASSWORD}"'/g; s/${ENV_DATABASE_PORT}/'"${DATABASE_PORT}"'/g;
+    s/${ENV_RABBITMQ_HOST}/'"${RABBITMQ_HOST}"'/g; s/${ENV_RABBITMQ_USER}/'"${RABBITMQ_USER}"'/g;
+    s/${ENV_RABBITMQ_PASSWORD}/'"${RABBITMQ_PASSWORD}"'/g; s/${ENV_RABBITMQ_PORT}/'"${RABBITMQ_PORT}"'/g;'
+    appsettings.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
+  - docker build -t golang-identity-service:${TRAVIS_COMMIT} .
+  - docker run -d -p 127.0.0.1:8000:8000 golang-identity-service:${TRAVIS_COMMIT}
 script:
   - sonar-scanner
   - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME"
