@@ -3,7 +3,7 @@ services:
 - docker
 branches:
   only:
-  - travis-ci
+  - master
 before_script:
 - sed 's/${ENV_DATABASE_HOST}/'"${DATABASE_HOST}"'/g; s/${ENV_DATABASE_USER}/'"${DATABASE_USER}"'/g;
   s/${ENV_DATABASE_PASSWORD}/'"${DATABASE_PASSWORD}"'/g; s/${ENV_DATABASE_PORT}/'"${DATABASE_PORT}"'/g;
