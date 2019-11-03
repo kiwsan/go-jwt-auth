@@ -19,6 +19,7 @@ after_success:
   - eval "$(ssh-agent -s)"
   - ssh-add ~/.ssh/travis_rsa
   - ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} -v exit
+  - git init
   - git remote add deploy "${REMOTE_USER}@${SSH_HOST}:${REMOTE_APP_DIR}"
   - git config user.name "Travis CI"
   - git config user.email "kiwsan+travis@gmail.com"
