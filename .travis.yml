@@ -1,28 +1,31 @@
 language: go
-
 services:
-  - docker
-
+- docker
+addons:
+  ssh_known_hosts: ${SSH_HOST}
+  sonarcloud:
+    organization: kiwsan
+    token:
+      secure: "${SONAR_CLOUD_TOKEN}"
 branches:
   only:
-  - travis-ci
-  
+  - master
 before_script:
-  - sed 's/${ENV_DATABASE_HOST}/'"${DATABASE_HOST}"'/g; s/${ENV_DATABASE_USER}/'"${DATABASE_USER}"'/g; s/${ENV_DATABASE_PASSWORD}/'"${DATABASE_PASSWORD}"'/g; s/${ENV_DATABASE_PORT}/'"${DATABASE_PORT}"'/g; s/${ENV_RABBITMQ_HOST}/'"${RABBITMQ_HOST}"'/g; s/${ENV_RABBITMQ_USER}/'"${RABBITMQ_USER}"'/g; s/${ENV_RABBITMQ_PASSWORD}/'"${RABBITMQ_PASSWORD}"'/g; s/${ENV_RABBITMQ_PORT}/'"${RABBITMQ_PORT}"'/g;' appsettings.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
-  - docker build -t golang-identity-service:${TRAVIS_COMMIT} .
-  - docker run -d -p 127.0.0.1:8000:8000 golang-identity-service:${TRAVIS_COMMIT}
-
+- sed 's/${ENV_DATABASE_HOST}/'"${DATABASE_HOST}"'/g; s/${ENV_DATABASE_USER}/'"${DATABASE_USER}"'/g;
+  s/${ENV_DATABASE_PASSWORD}/'"${DATABASE_PASSWORD}"'/g; s/${ENV_DATABASE_PORT}/'"${DATABASE_PORT}"'/g;
+  s/${ENV_RABBITMQ_HOST}/'"${RABBITMQ_HOST}"'/g; s/${ENV_RABBITMQ_USER}/'"${RABBITMQ_USER}"'/g;
+  s/${ENV_RABBITMQ_PASSWORD}/'"${RABBITMQ_PASSWORD}"'/g; s/${ENV_RABBITMQ_PORT}/'"${RABBITMQ_PORT}"'/g;'
+  appsettings.yml > appsettings.${TRAVIS_ENVIRONMENT}.yml
+- docker build -t golang-identity-service:${TRAVIS_COMMIT} .
+- docker run -d -p 127.0.0.1:8000:8000 golang-identity-service:${TRAVIS_COMMIT}
 script:
-  # the following commands line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - sonar-scanner
-  - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME" --password-stdin  
-  - docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:${TRAVIS_COMMIT}
-  - docker push $DOCKER_CUSTOM_HOST/golang-identity-service:${TRAVIS_COMMIT}
-  - docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:latest
-  - docker push $DOCKER_CUSTOM_HOST/golang-identity-service:latest
-
-addons:
-  sonarcloud:
-    organization: "kiwsan"
-    token:
-      secure: "${SONAR_CLOUD_TOKEN}" # encrypted value of your token
+- sonar-scanner
+- echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME"
+  --password-stdin
+- docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:${TRAVIS_COMMIT}
+- docker push $DOCKER_CUSTOM_HOST/golang-identity-service:${TRAVIS_COMMIT}
+- docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:latest
+- docker push $DOCKER_CUSTOM_HOST/golang-identity-service:latest
+before_install:
+  - openssl aes-256-cbc -K $encrypted_b0b2958c016f_key -iv $encrypted_b0b2958c016f_iv -in .travis/travis_rsa.enc -out ~/.ssh/travis_rsa -d
+  - chmod 600 ~/.ssh/travis_rsa
