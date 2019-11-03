@@ -22,5 +22,5 @@ after_success:
   - git init
   - git remote add deploy "${REMOTE_USER}@${SSH_HOST}:/opt/go-auth-service" && git config user.name "Travis CI" && git config user.email "kiwsan+travis@gmail.com" && git status && git add docker-compose.yml && git commit -m "deploy"
   - git push --force deploy master
-  - ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} "docker-compose -f docker-compose.${TRAVIS_ENVIRONMENT}.yml pull"
-  - ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} "docker-compose -f docker-compose.${TRAVIS_ENVIRONMENT}.yml up -d"
+  - ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} "docker-compose -f ${REMOTE_APP_DIR}/public/docker-compose.${TRAVIS_ENVIRONMENT}.yml pull"
+  - ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} "docker-compose -f ${REMOTE_APP_DIR}/public/docker-compose.${TRAVIS_ENVIRONMENT}.yml up -d"
