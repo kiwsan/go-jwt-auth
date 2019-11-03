@@ -33,4 +33,7 @@ before_install:
   - mv travis_rsa ~/.ssh/travis_rsa
 
 after_success:
-  - bash ./.travis/deploy.sh
+  - set -xe
+  - eval "$(ssh-agent -s)"
+  - ssh-add ~/.ssh/travis_rsa
+  - ls
