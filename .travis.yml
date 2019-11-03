@@ -27,3 +27,4 @@ after_success:
   - git add docker-compose.yml
   - git commit -m "deploy"
   - git push --force deploy master
+  
