@@ -1,15 +1,9 @@
 language: go
 services:
 - docker
-addons:
-  ssh_known_hosts: ${SSH_HOST}
-  sonarcloud:
-    organization: kiwsan
-    token:
-      secure: "${SONAR_CLOUD_TOKEN}"
 branches:
   only:
-  - master
+  - travis-ci
 before_script:
 - sed 's/${ENV_DATABASE_HOST}/'"${DATABASE_HOST}"'/g; s/${ENV_DATABASE_USER}/'"${DATABASE_USER}"'/g;
   s/${ENV_DATABASE_PASSWORD}/'"${DATABASE_PASSWORD}"'/g; s/${ENV_DATABASE_PORT}/'"${DATABASE_PORT}"'/g;
@@ -26,6 +20,13 @@ script:
 - docker push $DOCKER_CUSTOM_HOST/golang-identity-service:${TRAVIS_COMMIT}
 - docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:latest
 - docker push $DOCKER_CUSTOM_HOST/golang-identity-service:latest
+addons:
+  ssh_known_hosts: ${SSH_HOST}
+  sonarcloud:
+    organization: kiwsan
+    token:
+      secure: "${SONAR_CLOUD_TOKEN}"
 before_install:
-  - openssl aes-256-cbc -K $encrypted_b0b2958c016f_key -iv $encrypted_b0b2958c016f_iv -in .travis/travis_rsa.enc -out ~/.ssh/travis_rsa -d
+  - openssl aes-256-cbc -K $encrypted_decd9e9f07c0_key -iv $encrypted_decd9e9f07c0_iv
+  - in travis_rsa.enc -out travis_rsa -d
   - chmod 600 ~/.ssh/travis_rsa
