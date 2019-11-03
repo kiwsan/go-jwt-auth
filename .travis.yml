@@ -20,7 +20,7 @@ script:
   - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME"
     --password-stdin
 after_success:
-  - set -xe
+  #- set -xe
   - rm -rf .git
   - eval "$(ssh-agent -s)" && ssh-add ~/.ssh/travis_rsa && ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} -v exit
   - git init
