@@ -32,9 +32,7 @@ script:
   - docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:latest
   - docker push $DOCKER_CUSTOM_HOST/golang-identity-service:latest
 after_success:
-  #- set -xe
-  - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME"
-    --password-stdin
+  - set -xe
   - rm -rf .git
   - eval "$(ssh-agent -s)" && ssh-add ~/.ssh/travis_rsa && ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} -v exit
   - git init
