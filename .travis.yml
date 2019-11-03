@@ -15,6 +15,10 @@ before_install:
     -in travis_rsa.enc -out travis_rsa -d
   - chmod 600 travis_rsa
   - mv travis_rsa ~/.ssh/travis_rsa
+script:
+  #- sonar-scanner
+  - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME"
+    --password-stdin
 after_success:
   - set -xe
   - rm -rf .git
@@ -22,5 +26,5 @@ after_success:
   - git init
   - git remote add deploy "${REMOTE_USER}@${SSH_HOST}:/opt/go-auth-service" && git config user.name "Travis CI" && git config user.email "kiwsan+travis@gmail.com" && git status && git add docker-compose.yml && git commit -m "deploy"
   - git push --force deploy master
-  - ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} "docker-compose -f ${REMOTE_APP_DIR}/public/docker-compose.${TRAVIS_ENVIRONMENT}.yml pull"
-  - ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} "docker-compose -f ${REMOTE_APP_DIR}/public/docker-compose.${TRAVIS_ENVIRONMENT}.yml up -d"
+  - ssh -l ${REMOTE_USER} ${SSH_HOST} "docker-compose -f ${REMOTE_APP_DIR}/public/docker-compose.${TRAVIS_ENVIRONMENT}.yml pull"
+  - ssh -l ${REMOTE_USER} ${SSH_HOST} "docker-compose -f ${REMOTE_APP_DIR}/public/docker-compose.${TRAVIS_ENVIRONMENT}.yml up -d"
