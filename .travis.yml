@@ -3,7 +3,7 @@ services:
   - docker
 branches:
   only:
-    - master
+    - travis-ci
 addons:
   ssh_known_hosts: "${SSH_HOST}"
   sonarcloud:
