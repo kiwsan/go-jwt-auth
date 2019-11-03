@@ -21,12 +21,11 @@ script:
 - docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:latest
 - docker push $DOCKER_CUSTOM_HOST/golang-identity-service:latest
 addons:
-  ssh_known_hosts: ${SSH_HOST}
+  ssh_known_hosts: "${SSH_HOST}"
   sonarcloud:
     organization: kiwsan
     token:
       secure: "${SONAR_CLOUD_TOKEN}"
 before_install:
-  - openssl aes-256-cbc -K $encrypted_decd9e9f07c0_key -iv $encrypted_decd9e9f07c0_iv
-  - in travis_rsa.enc -out travis_rsa -d
-  - chmod 600 ~/.ssh/travis_rsa
+- openssl aes-256-cbc -K $encrypted_decd9e9f07c0_key -iv $encrypted_decd9e9f07c0_iv
+  -in travis_rsa.enc -out travis_rsa -d
