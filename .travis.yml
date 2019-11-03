@@ -33,14 +33,4 @@ before_install:
   - mv travis_rsa ~/.ssh/id_rsa
 
 after_success:
-  #- set -xe
-  - eval "$(ssh-agent -s)"
-  - ssh-add ~/.ssh/id_rsa
-  - git init
-  - git remote add deploy "travis@${SSH_HOST}:/opt/website"
-  - git config user.name "Travis CI"
-  - git config user.email "kiwsan+travis@gmail.com"
-  - git status
-  - git add docker-compose.yml
-  - git commit -m "deploy"
-  - git push --force deploy master
+  - ssh ${REMOTE_USER}@${SSH_HOST} -v exit
