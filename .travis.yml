@@ -33,4 +33,6 @@ before_install:
   - mv travis_rsa ~/.ssh/travis_rsa
 
 after_success:
+  - eval "$(ssh-agent -s)"
+  - ssh-add ~/.ssh/travis_rsa
   - ssh ${REMOTE_USER}@${SSH_HOST} -v exit
