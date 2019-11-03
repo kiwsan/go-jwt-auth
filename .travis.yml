@@ -16,17 +16,21 @@ before_install:
   - chmod 600 travis_rsa
   - mv travis_rsa ~/.ssh/travis_rsa
 script:
-  #- sonar-scanner
+  - sonar-scanner
   - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME"
     --password-stdin
+  - docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:${TRAVIS_COMMIT}
+  - docker push $DOCKER_CUSTOM_HOST/golang-identity-service:${TRAVIS_COMMIT}
+  - docker tag golang-identity-service:${TRAVIS_COMMIT} $DOCKER_CUSTOM_HOST/golang-identity-service:latest
+  - docker push $DOCKER_CUSTOM_HOST/golang-identity-service:latest
 after_success:
-  #- set -xe
+  - set -xe
+  - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME"
+    --password-stdin
   - rm -rf .git
   - eval "$(ssh-agent -s)" && ssh-add ~/.ssh/travis_rsa && ssh -o "StrictHostKeyChecking=no" ${REMOTE_USER}@${SSH_HOST} -v exit
   - git init
   - git remote add deploy "${REMOTE_USER}@${SSH_HOST}:/opt/go-auth-service" && git config user.name "Travis CI" && git config user.email "kiwsan+travis@gmail.com" && git status && git add docker-compose.yml && git commit -m "deploy"
   - git push --force deploy master
-  - echo "$DOCKER_PASSWORD" | docker login $DOCKER_CUSTOM_HOST -u "$DOCKER_USERNAME"
-    --password-stdin
   - ssh -l ${REMOTE_USER} ${SSH_HOST} "docker-compose -f ${REMOTE_APP_DIR}/public/docker-compose.${TRAVIS_ENVIRONMENT}.yml pull"
   - ssh -l ${REMOTE_USER} ${SSH_HOST} "docker-compose -f ${REMOTE_APP_DIR}/public/docker-compose.${TRAVIS_ENVIRONMENT}.yml up -d"
