@@ -13,10 +13,10 @@ addons:
 before_install:
   - bash scripts/ssh-build.sh
 before_script:
-  - bash scripts/variable-build.sh
-  - bash scripts/docker-build.sh
-script:
   - sonar-scanner
+  - bash scripts/variable-build.sh
+script:
+  - bash scripts/docker-build.sh
   - bash scripts/docker-push.sh
 after_success:
   - set -xe
