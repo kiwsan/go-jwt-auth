@@ -178,6 +178,10 @@ post-receive hook
 git --work-tree=/opt/www/public/ --git-dir=/opt/www/.git checkout -f
 ```
 
+```bash
+$ chmod +x post-receive
+```
+
 ## Resources
 - https://echo.labstack.com/cookbook/jwt
 - https://medium.com/monstar-lab-bangladesh-engineering/jwt-auth-in-go-dde432440924
