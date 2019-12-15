@@ -6,5 +6,5 @@ import (
 )
 
 func HomeGetHandler(c echo.Context) error {
-	return c.String(http.StatusOK, "Identity Service..")
+	return c.String(http.StatusOK, "Identity Service")
 }
