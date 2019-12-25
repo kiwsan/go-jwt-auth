@@ -16,11 +16,7 @@ $ curl -X POST -H 'Content-Type: application/json' -i http://localhost:8000/sign
 
 Response
 ```bash
-{
-    "email": "admin@kiwsan.com",
-    "password": "password",
-    "confirm_password": "password"
-}
+The user has been created.
 ```
 
 ### Login
