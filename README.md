@@ -183,3 +183,6 @@ $ chmod +x post-receive
 - https://medium.com/monstar-lab-bangladesh-engineering/jwt-auth-in-go-dde432440924
 - https://www.baeldung.com/rest-api-error-handling-best-practices
 - https://docs.travis-ci.com/user/encrypting-files/
+
+## User Story (Scrum)
+- https://tree.taiga.io/project/kiwsan-go-jwt-auth/timeline
